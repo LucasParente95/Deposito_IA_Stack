@@ -33,8 +33,16 @@ def conectar():
 # Recebe um ItemAlimentar já validado pelo Pydantic,
 # gera o embedding do nome e salva tudo no banco.
 # ──────────────────────────────────────────────────
+def _texto_para_embedding(item: ItemAlimentar) -> str:
+    """
+    Monta o texto que será embedado. Incluir categoria dá contexto ao modelo —
+    'Maçã Fuji, categoria: fresco' fica no cluster alimentar, não no cluster Apple/tech.
+    """
+    return f"{item.nome}, categoria: {item.categoria.value}"
+
+
 def inserir_alimento(item: ItemAlimentar) -> str:
-    vetor = modelo_embedding().encode(item.nome)
+    vetor = modelo_embedding().encode(_texto_para_embedding(item))
 
     with conectar() as conn:
         with conn.cursor() as cur:

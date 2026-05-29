@@ -1,0 +1,10 @@
+{
+  "name": "gestor-alimentos-pipeline",
+  "version": "1.0.0",
+  "description": "Pipeline pedagógico: Pydantic + Embeddings + pgvector + RAG",
+  "scripts": {
+    "start": "python3 interfaces/app.py",
+    "test": "python3 step1_pydantic/testes.py && python3 step3_pgvector/testes.py",
+    "seed": "python3 step3_pgvector/testes.py"
+  }
+}
